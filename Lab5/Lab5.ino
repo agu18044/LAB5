@@ -54,7 +54,7 @@ void setup(){
 
   printDirectory(root, 0);
 
-  Serial.println("done!");
+  Serial.println("Seleccione unos de los archivos");
 }
 
 void loop(){
