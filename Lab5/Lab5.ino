@@ -21,11 +21,13 @@
 #include <SPI.h>
 #include <SD.h>
 
+int inByte;
 File root;
 File myFile;
 
-void setup()
-{
+void printfile1 (void);
+
+void setup(){
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
   while (!Serial) {
@@ -51,27 +53,15 @@ void setup()
   printDirectory(root, 0);
 
   Serial.println("done!");
-
-
-  // open the file for reading:
-  myFile = SD.open("test.txt");
-  if (myFile) {
-    Serial.println("test.txt:");
-
-    // read from the file until there's nothing else in it:
-    while (myFile.available()) {
-      Serial.write(myFile.read());
-    }
-    // close the file:
-    myFile.close();
-  } else {
-    // if the file didn't open, print an error:
-    Serial.println("error opening test.txt");
-  }
 }
 
-void loop()
-{
+void loop(){
+  if (Serial.available()){
+    inByte = Serial.read();
+    }
+  if (inByte =='1'){
+   printfile1();
+  }
   
 }
 void printDirectory(File dir, int numTabs) {
@@ -97,3 +87,20 @@ void printDirectory(File dir, int numTabs) {
      entry.close();
    }
 }
+
+void printfile1 (void){
+    myFile = SD.open("test.txt");
+  if (myFile) {
+    Serial.println("test.txt:");
+
+    // read from the file until there's nothing else in it:
+    while (myFile.available()) {
+      Serial.write(myFile.read());
+    }
+    // close the file:
+    myFile.close();
+  } else {
+    // if the file didn't open, print an error:
+    Serial.println("error opening test.txt");
+  }
+  }
